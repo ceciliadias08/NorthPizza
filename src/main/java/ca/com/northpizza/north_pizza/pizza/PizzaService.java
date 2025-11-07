@@ -13,4 +13,14 @@ public class PizzaService {
         this.modelMapper = modelMapper;
     }
 
+    //Received pizzaDTO coming from client --> controller --> service
+    public PizzaDTO createPizza(PizzaDTO pizzaDTO){
+        //Convert the information from DTO to class Pizza
+        //Saving the entity of pizza inside the variable pizza with the conversion of DTO to pizza class
+        Pizza pizza = modelMapper.map(pizzaDTO, Pizza.class);
+        //Passing the information of variable to repository
+        pizzaRepository.save(pizza);
+        return modelMapper.map(pizza, PizzaDTO.class);
+    }
+
 }
