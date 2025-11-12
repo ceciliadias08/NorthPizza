@@ -17,7 +17,7 @@ public class Pizza {
     private Flavour flavour;
     private double price;
     @Enumerated (EnumType.STRING)
-    private Size size;
+    private Size sizes;
     private boolean availability;
 
 }

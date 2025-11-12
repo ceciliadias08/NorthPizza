@@ -4,7 +4,7 @@ public class PizzaDTO {
     private String name;
     private Flavour flavour;
     private double price;
-    private Size size;
+    private Size sizes;
     private boolean availability;
 
     public String getName() {
@@ -31,12 +31,12 @@ public class PizzaDTO {
         this.price = price;
     }
 
-    public Size getSize() {
-        return size;
+    public Size getSizes() {
+        return sizes;
     }
 
-    public void setSize(Size size) {
-        this.size = size;
+    public void setSizes(Size sizes) {
+        this.sizes = sizes;
     }
 
     public boolean isAvailability() {
