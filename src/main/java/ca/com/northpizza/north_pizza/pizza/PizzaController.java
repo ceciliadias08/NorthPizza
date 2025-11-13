@@ -1,9 +1,8 @@
 package ca.com.northpizza.north_pizza.pizza;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //Determining that this class is a controller
 @RestController
@@ -22,5 +21,10 @@ public class PizzaController {
     @PostMapping
     public void register(@RequestBody PizzaDTO pizzaDTO){
         pizzaService.createPizza(pizzaDTO);
+    }
+
+    @GetMapping
+    public List<PizzaDTO> findAllController(){
+        return pizzaService.findAllService();
     }
 }

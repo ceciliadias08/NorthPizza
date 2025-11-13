@@ -3,6 +3,10 @@ package ca.com.northpizza.north_pizza.pizza;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PizzaService {
     private final PizzaRepository pizzaRepository;
@@ -23,4 +27,10 @@ public class PizzaService {
         return modelMapper.map(pizza, PizzaDTO.class);
     }
 
+    public List<PizzaDTO> findAllService() {
+        //Return the pizza list
+        //PERGUNTA PRO CHAT
+        return pizzaRepository.findAll().stream().map(pizza -> modelMapper.map(pizza, PizzaDTO.class))
+                .collect(Collectors.toList());
+    }
 }
