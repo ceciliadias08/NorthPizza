@@ -1,0 +1,1 @@
+ALTER TABLE Pizza ADD category VARCHAR(50)

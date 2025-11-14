@@ -1,11 +1,20 @@
 package ca.com.northpizza.north_pizza.pizza;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 public class PizzaDTO {
+    @NotBlank
     private String name;
     private Flavour flavour;
+    @Positive
+    @Min(value = 1)
     private double price;
     private Size sizes;
     private boolean availability;
+    private Category category;
 
     public String getName() {
         return name;
@@ -45,5 +54,13 @@ public class PizzaDTO {
 
     public void setAvailability(boolean availability) {
         this.availability = availability;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

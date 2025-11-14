@@ -1,5 +1,6 @@
 package ca.com.northpizza.north_pizza.pizza;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +30,12 @@ public class PizzaService {
 
     public List<PizzaDTO> findAllService() {
         //Return the pizza list
-        //PERGUNTA PRO CHAT
         return pizzaRepository.findAll().stream().map(pizza -> modelMapper.map(pizza, PizzaDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    public PizzaDTO findByIdService(Long id){
+        Pizza pizza = pizzaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        return modelMapper.map(pizza, PizzaDTO.class);
     }
 }

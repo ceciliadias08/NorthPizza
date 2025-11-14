@@ -19,5 +19,7 @@ public class Pizza {
     @Enumerated (EnumType.STRING)
     private Size sizes;
     private boolean availability;
+    @Enumerated (EnumType.STRING)
+    private Category category;
 
 }
