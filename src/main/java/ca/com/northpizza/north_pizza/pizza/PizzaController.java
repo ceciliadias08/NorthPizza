@@ -1,5 +1,6 @@
 package ca.com.northpizza.north_pizza.pizza;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +20,17 @@ public class PizzaController {
     //controller --> Service
     //PizzaDTO information received from the client
     @PostMapping
-    public void register(@RequestBody PizzaDTO pizzaDTO){
+    public void register(@RequestBody @Valid PizzaDTO pizzaDTO){
         pizzaService.createPizza(pizzaDTO);
     }
 
     @GetMapping
     public List<PizzaDTO> findAllController(){
         return pizzaService.findAllService();
+    }
+
+    @GetMapping("/{id}")
+    public PizzaDTO findByIdController(@PathVariable Long id){
+        return pizzaService.findByIdService(id);
     }
 }
