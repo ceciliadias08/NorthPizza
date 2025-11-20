@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public class PizzaDTO {
+    private Long id;
     @NotBlank
     private String name;
     private Flavour flavour;
@@ -62,5 +63,13 @@ public class PizzaDTO {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

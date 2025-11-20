@@ -22,4 +22,7 @@ public class Pizza {
     @Enumerated (EnumType.STRING)
     private Category category;
 
+    public void setId(long id) {
+        this.id = id;
+    }
 }

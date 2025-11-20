@@ -2,6 +2,8 @@ package ca.com.northpizza.north_pizza.pizza;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,14 +30,25 @@ public class PizzaService {
         return modelMapper.map(pizza, PizzaDTO.class);
     }
 
-    public List<PizzaDTO> findAllService() {
+    public Page<PizzaDTO> findAllService(Pageable pageable) {
         //Return the pizza list
-        return pizzaRepository.findAll().stream().map(pizza -> modelMapper.map(pizza, PizzaDTO.class))
-                .collect(Collectors.toList());
+        return pizzaRepository.findAll(pageable).map(pizza -> modelMapper.map(pizza,PizzaDTO.class));
     }
 
     public PizzaDTO findByIdService(Long id){
         Pizza pizza = pizzaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
         return modelMapper.map(pizza, PizzaDTO.class);
+    }
+
+    //Option to updade pizzas when on use or register
+    public PizzaDTO updatePizza(Long id, PizzaDTO pizzaDTO){
+        Pizza pizza = modelMapper.map(pizzaDTO, Pizza.class);
+        pizza.setId(id);
+        pizza = pizzaRepository.save(pizza);
+        return modelMapper.map(pizza, PizzaDTO.class);
+    }
+
+    public void deletePizza(Long id){
+        pizzaRepository.deleteById(id);
     }
 }
