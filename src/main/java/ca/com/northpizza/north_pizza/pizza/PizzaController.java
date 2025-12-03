@@ -6,15 +6,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
+import java.net.URI;
 
 //Determining that this class is a controller
 @RestController
 //Path/Mapping/endpoint of this controller
 @RequestMapping("/pizzas")
 public class PizzaController {
-    //Injecting the dependecy
+    //Injecting the dependency
     private final PizzaService pizzaService;
 
     //client --> controller --> Service
@@ -24,26 +25,30 @@ public class PizzaController {
     //controller --> Service
     //PizzaDTO information received from the client
     @PostMapping
-    public void register(@RequestBody @Valid PizzaDTO pizzaDTO){
-        pizzaService.createPizza(pizzaDTO);
+    public ResponseEntity<PizzaDTO> register(@RequestBody @Valid PizzaDTO pizzaDTO, UriComponentsBuilder uriComponentsBuilder){
+       PizzaDTO pizzaDTORegister = pizzaService.createPizza(pizzaDTO);
+       //Build the uri path to return
+       URI path = uriComponentsBuilder.path("/pizzas/{id}").buildAndExpand(pizzaDTORegister.getId()).toUri();
+       return ResponseEntity.created(path).body(pizzaDTORegister);
     }
 
     @GetMapping
     //Reduce the return of the list of items
-    public Page<PizzaDTO> findAllPizza(@PageableDefault (size = 10) Pageable pageable){
-        return pizzaService.findAllService(pageable);
+    public ResponseEntity<Page<PizzaDTO>> findAllPizza(@PageableDefault (size = 10) Pageable pageable){
+        Page<PizzaDTO> pizzaDTOFindAll = pizzaService.findAllService(pageable);
+        return ResponseEntity.ok(pizzaDTOFindAll);
     }
 
     @GetMapping("/{id}")
-    public PizzaDTO findByIdPizza(@PathVariable Long id){
-        return pizzaService.findByIdService(id);
+    public ResponseEntity<PizzaDTO> findByIdPizza(@PathVariable Long id){
+        PizzaDTO pizzaDTOFind = pizzaService.findByIdService(id);
+        return ResponseEntity.ok(pizzaDTOFind);
     }
 
     @PutMapping("/{id}")
-    public PizzaDTO updatePizza(@PathVariable Long id, @RequestBody @Valid PizzaDTO pizzaDTO){
-        // PizzaDTO pizzaDTOUpdated = pizzaService.updatePizza(id, pizzaDTO);
-        // return pizzaDTOUpdated
-        return pizzaService.updatePizza(id, pizzaDTO);
+    public ResponseEntity<PizzaDTO> updatePizza(@PathVariable Long id, @RequestBody @Valid PizzaDTO pizzaDTO){
+        PizzaDTO pizzaDTOUpdated = pizzaService.updatePizza(id, pizzaDTO);
+        return ResponseEntity.ok(pizzaDTOUpdated);
     }
 
     @DeleteMapping("/{id}")
