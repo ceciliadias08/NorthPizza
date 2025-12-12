@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-
+//Endpoint, entry door on the application, define de requisition
 //Determining that this class is a controller
 @RestController
 //Path/Mapping/endpoint of this controller
