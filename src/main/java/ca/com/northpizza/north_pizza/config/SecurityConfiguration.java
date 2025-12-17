@@ -23,6 +23,7 @@ public class SecurityConfiguration {
     }
 
     //Security, authenticating the configurations
+    //Create the logic of autentication
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

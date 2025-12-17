@@ -1,18 +1,15 @@
 package ca.com.northpizza.north_pizza.users;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity //To say to spring that it's an entity
-@Table(name = "Users") //Name of the table on the database
-@AllArgsConstructor //With the parameters
-@NoArgsConstructor //No parameters
-public class Users {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //Id made by the database
+//It's the conversion itself and model mapping is the "translator"
+//Entity --> database
+//DTO --> client/consumer
+public class UsersDTO {
     private Long id;
+    @NotBlank
     private String login;
+    @NotBlank
     private String password;
 
     public Long getId() {
