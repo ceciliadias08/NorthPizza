@@ -1,5 +1,6 @@
 package ca.com.northpizza.north_pizza.users;
 
+import ca.com.northpizza.north_pizza.config.EncoderPassword;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +24,8 @@ public class UsersService implements UserDetailsService{
 
     public UsersDTO createUser(UsersDTO usersDTO){
         Users users = modelMapper.map(usersDTO, Users.class);
+        String passwordEncoded = EncoderPassword.encode(users.getPassword());
+        users.setPassword(passwordEncoded);
         usersRepository.save(users);
         return modelMapper.map(users, UsersDTO.class);
     }
