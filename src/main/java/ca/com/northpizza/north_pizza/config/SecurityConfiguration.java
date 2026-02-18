@@ -2,6 +2,7 @@ package ca.com.northpizza.north_pizza.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,7 +21,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception{ //Verification "door"
         http.csrf(csrf -> csrf.disable()). //Simulates to be the admin
                 sessionManagement(session ->session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)); //Security with amnesia
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Security with amnesia
+                .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .anyRequest().authenticated());
         return http.build();
     }
 

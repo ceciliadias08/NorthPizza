@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class TreatingException {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Void> treatException(){
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build(); //Not found treating exception
     }
 }

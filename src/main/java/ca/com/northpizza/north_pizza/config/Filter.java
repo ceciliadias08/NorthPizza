@@ -11,16 +11,26 @@ import java.io.IOException;
 
 @Component
 public class Filter extends OncePerRequestFilter {
+    private final TokenService tokenService;
+
+    public Filter(TokenService tokenService){
+        this.tokenService = tokenService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = searchToken(request);
+        if(token != null) {
+            tokenService.searchUserFromToken(token);
+        }
+        filterChain.doFilter(request, response);
     }
 
     private String searchToken(HttpServletRequest request){
         var authorization = request.getHeader("Authorization");
-        if (authorization == null){
-            throw new RuntimeException("Token not found");
+        if(authorization != null){
+            return authorization.replace("Bearer ","");
         }
-        return authorization.replace("Bearer ","");
+        return null;
     }
 }
