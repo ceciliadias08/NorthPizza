@@ -1,9 +1,12 @@
 package ca.com.northpizza.north_pizza.config;
 
+import ca.com.northpizza.north_pizza.users.UsersRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -12,16 +15,22 @@ import java.io.IOException;
 @Component
 public class Filter extends OncePerRequestFilter {
     private final TokenService tokenService;
+    private final UsersRepository usersRepository;
 
-    public Filter(TokenService tokenService){
+    public Filter(TokenService tokenService, UsersRepository usersRepository){
         this.tokenService = tokenService;
+        this.usersRepository = usersRepository;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = searchToken(request);
         if(token != null) {
-            tokenService.searchUserFromToken(token);
+            var userLogin = tokenService.searchUserFromToken(token);
+            var user = usersRepository.findByLogin(userLogin);
+
+            var authenticator = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authenticator);
         }
         filterChain.doFilter(request, response);
     }
