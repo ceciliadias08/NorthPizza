@@ -1,5 +1,6 @@
 package ca.com.northpizza.north_pizza.pizza;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import java.net.URI;
 @RestController
 //Path/Mapping/endpoint of this controller
 @RequestMapping("/pizzas")
+@SecurityRequirement(name = "bearer-key")
 public class PizzaController {
     //Injecting the dependency
     private final PizzaService pizzaService;

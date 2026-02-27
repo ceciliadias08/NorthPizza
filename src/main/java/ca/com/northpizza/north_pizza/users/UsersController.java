@@ -1,5 +1,6 @@
 package ca.com.northpizza.north_pizza.users;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import java.net.URI;
 @RestController
 //Informing the adress
 @RequestMapping("/users")
+@SecurityRequirement(name = "bearer-key")
 public class UsersController {
     //Responsible for the business rule
     private final UsersService usersService;

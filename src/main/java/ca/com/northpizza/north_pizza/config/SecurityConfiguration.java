@@ -29,7 +29,11 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable()). //Simulates to be the admin
                 sessionManagement(session ->session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Security with amnesia
-                .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .requestMatchers( "/v3/api-docs/**").permitAll()
+                        .requestMatchers( "/swagger-ui.html").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
                         .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
